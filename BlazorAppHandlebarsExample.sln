@@ -13,6 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{E42A73AC-5034-441B-973B-CC6D3319FC82}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines-pulumi.yml = azure-pipelines-pulumi.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pulumi.Azure.StaticWebsite", "src\Pulumi\Pulumi.Azure.StaticWebsite.csproj", "{5026E9EE-FC52-492C-8AA6-A6082ABD056D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +30,17 @@ Global
 		{AA49F1C1-62DC-4ECE-9CEE-BE43878EF9AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA49F1C1-62DC-4ECE-9CEE-BE43878EF9AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA49F1C1-62DC-4ECE-9CEE-BE43878EF9AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5026E9EE-FC52-492C-8AA6-A6082ABD056D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5026E9EE-FC52-492C-8AA6-A6082ABD056D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5026E9EE-FC52-492C-8AA6-A6082ABD056D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5026E9EE-FC52-492C-8AA6-A6082ABD056D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AA49F1C1-62DC-4ECE-9CEE-BE43878EF9AF} = {4E8FBA79-46BE-4C57-AFF5-E3442F4BF2C5}
+		{5026E9EE-FC52-492C-8AA6-A6082ABD056D} = {E42A73AC-5034-441B-973B-CC6D3319FC82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C027DADB-BF11-4991-9D14-30D4A14A4C38}

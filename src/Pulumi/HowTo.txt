@@ -1,0 +1,7 @@
+﻿az login
+
+az account set --subscription ae...
+
+cd Pulumi
+dotnet publish ../src/BlazorAppHandlebarsExample -o ./docs-temp -c Release
+pulumi preview
