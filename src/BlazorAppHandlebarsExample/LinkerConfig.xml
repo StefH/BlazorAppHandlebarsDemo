@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!-- IL linker format: https://github.com/mono/linker#link-xml-file-examples -->
-<linker>
-  <assembly fullname="System.Core">
-    <!--  System.Linq.Expressions is required by Handlebars.Net and any expression.Compile caller. The assembly isn't stripped.  -->
-    <type fullname="System.Linq.Expressions" preserve="all"  />
-  </assembly>
-</linker>

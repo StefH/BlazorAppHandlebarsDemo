@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
+
+    <!-- WorkAround for https://github.com/rexm/Handlebars.Net/issues/345 -->
     <BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>
   </PropertyGroup>
 
@@ -19,17 +21,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.0-rc1.20223.4" PrivateAssets="all" />
     <PackageReference Include="System.Net.Http.Json" Version="3.2.0-rc1.20217.1" />
   </ItemGroup>
-
-  <!--<ItemGroup>
-    <None Remove="LinkerConfig.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="LinkerConfig.xml">
-      <LogicalName>$(MSBuildProjectName).xml</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>-->
-
-  <!--<ItemGroup>
-    <BlazorLinkerDescriptor Include="LinkerConfig.xml" />
-  </ItemGroup>-->
 </Project>
