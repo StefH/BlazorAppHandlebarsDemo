@@ -14,6 +14,12 @@
     <PackageReference Include="System.Net.Http.Json" Version="3.2.0-rc1.20217.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update=".nojekyll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <!--<ItemGroup>
     <None Remove="LinkerConfig.xml" />
   </ItemGroup>
