@@ -1,4 +1,5 @@
 ﻿@page "/"
+@page "/home"
 @using HandlebarsDotNet
 @using HandlebarsDotNet.Helpers
 
@@ -6,19 +7,19 @@
 
 <table class="table">
     <thead>
-    <tr>
-        <th>Input</th>
-        <th>Output</th>
-    </tr>
+        <tr>
+            <th>Input</th>
+            <th>Output</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var result in results)
-    {
-        <tr>
-            <td>@result.Input</td>
-            <td>@result.Output</td>
-        </tr>
-    }
+        @foreach (var result in results)
+        {
+            <tr>
+                <td>@result.Input</td>
+                <td>@result.Output</td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -86,7 +87,7 @@
                 result += e;
             }
 
-            results.Add(new TestResult {Input = test, Output = result});
+            results.Add(new TestResult { Input = test, Output = result });
         }
     }
 }
