@@ -24,7 +24,7 @@ stages:
         arguments: '--configuration $(BuildConfiguration) /p:Version=1.0.0-$(BuildNumber) --output docs-temp'
         zipAfterPublish: false
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli?view=azure-devops#file-structure-for-output-files-is-different-from-previous-builds
-        modifyOutputPath: true
+        modifyOutputPath: false
 
     - task: pulumi.build-and-release-task.custom-build-release-task.Pulumi@1
       displayName: 'Run pulumi - preview'
