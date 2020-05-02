@@ -736,7 +736,7 @@ namespace Pulumi.Azure.Extensions.Utils
                 extension = Dot + extension;
             }
 
-            return _mappings.Value.TryGetValue(extension, out string mime) ? mime : DefaultMimeType;
+            return _mappings.Value.TryGetValue(extension, out string? mime) ? mime : DefaultMimeType;
         }
 
         public static string GetExtension(string mimeType, bool throwErrorIfNotFound = true)
@@ -751,7 +751,7 @@ namespace Pulumi.Azure.Extensions.Utils
                 throw new ArgumentException("Requested mime type is not valid: " + mimeType);
             }
 
-            if (_mappings.Value.TryGetValue(mimeType, out string extension))
+            if (_mappings.Value.TryGetValue(mimeType, out string? extension))
             {
                 return extension;
             }
