@@ -25,10 +25,6 @@ stages:
         zipAfterPublish: false
         # https://docs.microsoft.com/en-us/azure/devops/pipelines/tasks/build/dotnet-core-cli?view=azure-devops#file-structure-for-output-files-is-different-from-previous-builds
         modifyOutputPath: true
-    - task: CmdLine@2
-      displayName: 'RoboCopy to docs folder'
-      inputs:
-        script: 'robocopy docs-temp\wwwroot docs /E'
 
     - task: pulumi.build-and-release-task.custom-build-release-task.Pulumi@1
       displayName: 'Run pulumi - preview'
