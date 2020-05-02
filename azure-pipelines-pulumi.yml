@@ -3,7 +3,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  buildProjectFunctions: '**/FunctionsAppV3.csproj'
+  buildProjectFunctions: '**/Pulumi.Azure.StaticWebsite.csproj'
   tag: '1.0.0'
   buildNumber: $(Build.BuildNumber)
 
@@ -29,7 +29,7 @@ stages:
     - task: pulumi.build-and-release-task.custom-build-release-task.Pulumi@1
       displayName: 'Run pulumi - preview'
       inputs:
-        azureSubscription: 'Service Connection for Pulumi'
+        azureSubscription: 'Service Connection for Static Websites'
         command: preview
         cwd: "Pulumi"
         stack: "StefH/blazor-wasm-static-website/dev"
@@ -40,7 +40,7 @@ stages:
       displayName: 'Run pulumi - up'
       condition: and(succeeded(), eq(variables['PULUMI_UP'], 'yes'))
       inputs:
-        azureSubscription: 'Service Connection for Pulumi'
+        azureSubscription: 'Service Connection for Static Websites'
         command: up
         cwd: "Pulumi"
         stack: "StefH/blazor-wasm-static-website/dev"
