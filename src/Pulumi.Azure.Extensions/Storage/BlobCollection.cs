@@ -76,16 +76,23 @@ namespace Pulumi.Azure.Extensions.Storage
 
             foreach (var file in GetAllFiles(args.Source))
             {
-                _ = new Blob(file.name, new BlobArgs
-                {
-                    AccessTier = args.AccessTier,
-                    Name = file.name,
-                    StorageAccountName = args.StorageAccountName,
-                    StorageContainerName = args.StorageContainerName,
-                    Type = args.Type,
-                    Source = new FileAsset(file.info.FullName),
-                    ContentType = MimeTypeMap.GetMimeType(file.info.Extension)
-                });
+                _ = new Blob(
+                    file.name,
+                    new BlobArgs
+                    {
+                        AccessTier = args.AccessTier,
+                        Name = file.name,
+                        StorageAccountName = args.StorageAccountName,
+                        StorageContainerName = args.StorageContainerName,
+                        Type = args.Type,
+                        Source = new FileAsset(file.info.FullName),
+                        ContentType = MimeTypeMap.GetMimeType(file.info.Extension)
+                    }
+                    //new CustomResourceOptions
+                    //{
+                    //    DependsOn = this
+                    //}
+                );
             }
         }
 

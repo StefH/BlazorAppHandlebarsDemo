@@ -43,6 +43,7 @@ stages:
         azureSubscription: 'Service Connection for Static Websites'
         command: up
         cwd: "src/Pulumi"
+        args: "--yes"
         stack: "StefH/blazor-wasm-static-website/dev"
       env:
         PULUMI_ACCESS_TOKEN: $(PULUMI_ACCESS_TOKEN)
