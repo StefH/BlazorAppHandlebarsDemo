@@ -10,7 +10,7 @@ namespace Pulumi.Azure.Extensions.Storage
     public sealed class BlobCollectionArgs : ResourceArgs
     {
         /// <summary>
-        /// An absolute path to a folder or a zipped file on the local file system.
+        /// An absolute path to a folder on the local file system.
         /// </summary>
         public string Source { get; set; }
 
