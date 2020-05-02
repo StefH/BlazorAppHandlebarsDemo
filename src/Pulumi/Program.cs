@@ -6,7 +6,7 @@ class Program
 {
     static Task<int> Main(string[] args)
     {
-        // System.Diagnostics.Debugger.Launch();
+        //System.Diagnostics.Debugger.Launch();
 
         return Deployment.RunAsync<StaticWebsiteStack>();
     }

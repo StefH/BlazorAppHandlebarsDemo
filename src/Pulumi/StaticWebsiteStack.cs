@@ -1,8 +1,7 @@
 ﻿using System.IO;
-using System.Linq;
-using MimeTypes;
 using Pulumi.Azure.Constants;
 using Pulumi.Azure.Core;
+using Pulumi.Azure.Extensions.Storage;
 using Pulumi.Azure.Storage;
 using Pulumi.Azure.Storage.Inputs;
 
@@ -44,33 +43,22 @@ namespace Pulumi.Azure.StaticWebsite
             });
 
             // Upload the files from local to azure storage account
-            string sourceFolder = Path.Combine("docs-temp", "wwwroot");
+            string wwwFolder = Path.Combine("docs-temp", "wwwroot");
             string currentDirectory = Directory.GetCurrentDirectory();
             var rootDirectory = Directory.GetParent(Directory.GetParent(currentDirectory).FullName);
-            string publishDirectory = Path.Combine(rootDirectory.FullName, sourceFolder);
+            string sourceFolder = Path.Combine(rootDirectory.FullName, wwwFolder);
 
-            var files = Directory.EnumerateFiles(publishDirectory, "*.*", SearchOption.AllDirectories)
-                .Select(path => new
-                {
-                    path, // The full source path
-                    name = path.Remove(0, publishDirectory.Length + 1).Replace(Path.PathSeparator, '/'), // Make the name Azure Storage comatible
-                    info = new FileInfo(path)
-                })
-                .Where(file => file.info.Length > 0) // https://github.com/pulumi/pulumi-azure/issues/544
-                ;
-
-            foreach (var file in files)
+            var blobCollection = new BlobCollection(sourceFolder, new BlobCollectionArgs
             {
-                var uploadedFile = new Blob(file.name, new BlobArgs
-                {
-                    Name = file.name,
-                    StorageAccountName = storageAccount.Name,
-                    StorageContainerName = "$web",
-                    Type = BlobTypes.Block,
-                    Source = new FileAsset(file.path),
-                    ContentType = MimeTypeMap.GetMimeType(file.info.Extension)
-                });
-            }
+                // Required
+                Type = BlobTypes.Block,
+                StorageAccountName = storageAccount.Name,
+                StorageContainerName = "$web",
+
+                // Optional
+                Parallelism = 16,
+                AccessTier = BlobAccessTiers.Hot
+            });
 
             // Export the Web address string for the storage account
             StaticEndpoint = storageAccount.PrimaryWebEndpoint;

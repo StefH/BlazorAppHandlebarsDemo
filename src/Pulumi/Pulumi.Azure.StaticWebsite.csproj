@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <Compile Remove="AzureFunctionStack.cs" />
+    <Compile Remove="BlobCollection.cs" />
+    <Compile Remove="MimeTypeMap.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Pulumi.Azure" Version="3.4.0" />
-    <PackageReference Include="Pulumi.Azure.Constants" Version="0.0.3" />
+    <PackageReference Include="Pulumi.Azure.Constants" Version="0.0.4" />
+    <PackageReference Include="Pulumi.Azure.Extensions" Version="0.0.1" />
   </ItemGroup>
 
 </Project>
