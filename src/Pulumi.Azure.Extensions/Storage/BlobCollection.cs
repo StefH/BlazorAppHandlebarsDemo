@@ -110,6 +110,7 @@ namespace Pulumi.Azure.Extensions.Storage
                         path.Remove(0, sourceFolderLength).Replace(Path.PathSeparator, '/') // Make the name Azure Storage compatible
                     ))
                     .Where(file => file.Item1.Length > 0) // https://github.com/pulumi/pulumi-azure/issues/544
+                    .OrderBy(file => file.Item2)
                 ;
             }
 
