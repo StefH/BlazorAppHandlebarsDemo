@@ -48,7 +48,7 @@ namespace Pulumi.Azure.StaticWebsite
             var rootDirectory = Directory.GetParent(Directory.GetParent(currentDirectory).FullName);
             string sourceFolder = Path.Combine(rootDirectory.FullName, wwwFolder);
 
-            var blobCollection = new BlobCollection("blazorhandlebars-static-website", new BlobCollectionArgs
+            var blobCollectionArgs = new BlobCollectionArgs
             {
                 // Required
                 Source = sourceFolder,
@@ -58,7 +58,13 @@ namespace Pulumi.Azure.StaticWebsite
 
                 // Optional
                 AccessTier = BlobAccessTiers.Hot
-            });
+            };
+
+            var blobCollectionOptions = new ComponentResourceOptions
+            {
+                Parent = storageAccount
+            };
+            var blobCollection = new BlobCollection("blazorhandlebars-static-website", blobCollectionArgs, blobCollectionOptions);
 
             // Export the Web address string for the storage account
             StaticEndpoint = storageAccount.PrimaryWebEndpoint;

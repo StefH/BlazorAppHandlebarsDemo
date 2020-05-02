@@ -113,7 +113,7 @@ namespace Pulumi.Azure.Extensions.Storage
                 ;
             }
 
-            throw new NotSupportedException();
+            throw new NotSupportedException("The source provided is not a folder.");
         }
     }
 }
