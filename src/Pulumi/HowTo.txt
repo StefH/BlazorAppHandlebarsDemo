@@ -2,6 +2,10 @@
 
 az account set --subscription ae...
 
-cd Pulumi
-dotnet publish ../src/BlazorAppHandlebarsExample -o ./docs-temp -c Release
-pulumi preview
+-- Go to the root from the project
+
+dotnet publish ./src/BlazorAppHandlebarsExample -o ./docs-temp -c Release
+
+pulumi preview --cwd src/Pulumi
+
+pulumi up --cwd src/Pulumi

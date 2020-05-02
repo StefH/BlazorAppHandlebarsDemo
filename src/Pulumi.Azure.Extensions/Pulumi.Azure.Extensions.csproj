@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <Description>Additional extensions for Microsoft Azure resources with Pulumi.Azure</Description>
+    <PackageTags>Pulumi;Azure;Microsoft;Extensions;Storage</PackageTags>
+    <ProjectGuid>{C7F2E3E7-05CE-4409-AC94-A0557B5B8C13}</ProjectGuid>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Pulumi.Azure" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>

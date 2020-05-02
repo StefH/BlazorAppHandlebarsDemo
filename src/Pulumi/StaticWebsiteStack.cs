@@ -48,9 +48,10 @@ namespace Pulumi.Azure.StaticWebsite
             var rootDirectory = Directory.GetParent(Directory.GetParent(currentDirectory).FullName);
             string sourceFolder = Path.Combine(rootDirectory.FullName, wwwFolder);
 
-            var blobCollection = new BlobCollection(sourceFolder, new BlobCollectionArgs
+            var blobCollection = new BlobCollection("blazorhandlebars-static-website", new BlobCollectionArgs
             {
                 // Required
+                Source = sourceFolder,
                 Type = BlobTypes.Block,
                 StorageAccountName = storageAccount.Name,
                 StorageContainerName = "$web",

@@ -15,7 +15,11 @@
   <ItemGroup>
     <PackageReference Include="Pulumi.Azure" Version="3.4.0" />
     <PackageReference Include="Pulumi.Azure.Constants" Version="0.0.4" />
-    <PackageReference Include="Pulumi.Azure.Extensions" Version="0.0.1" />
+    <!--<PackageReference Include="Pulumi.Azure.Extensions" Version="0.0.1" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pulumi.Azure.Extensions\Pulumi.Azure.Extensions.csproj" />
   </ItemGroup>
 
 </Project>
