@@ -57,7 +57,7 @@ namespace Pulumi.Azure.Extensions.Storage
         /// <param name="args">The arguments used to populate this resource's properties</param>
         /// <param name="options">A bag of options that control this resource's behavior</param>
         public BlobCollection(string name, BlobCollectionArgs args, ComponentResourceOptions? options = null) :
-            base("azure:storage:BlobCollection", name, options)
+            base("azure-extensions:storage:BlobCollection", name, options)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -76,23 +76,24 @@ namespace Pulumi.Azure.Extensions.Storage
 
             foreach (var file in GetAllFiles(args.Source))
             {
-                _ = new Blob(
-                    file.name,
-                    new BlobArgs
-                    {
-                        AccessTier = args.AccessTier,
-                        Name = file.name,
-                        StorageAccountName = args.StorageAccountName,
-                        StorageContainerName = args.StorageContainerName,
-                        Type = args.Type,
-                        Source = new FileAsset(file.info.FullName),
-                        ContentType = MimeTypeMap.GetMimeType(file.info.Extension)
-                    }
-                    //new CustomResourceOptions
-                    //{
-                    //    DependsOn = this
-                    //}
-                );
+                var blobArgs = new BlobArgs
+                {
+                    AccessTier = args.AccessTier,
+                    ContentType = MimeTypeMap.GetMimeType(file.info.Extension),
+                    Name = file.name,
+                    Parallelism = args.Parallelism,
+                    Source = new FileAsset(file.info.FullName),
+                    StorageAccountName = args.StorageAccountName,
+                    StorageContainerName = args.StorageContainerName,
+                    Type = args.Type
+                };
+
+                var blobOptions = new CustomResourceOptions
+                {
+                    Parent = this
+                };
+
+                _ = new Blob(file.name, blobArgs, blobOptions);
             }
         }
 

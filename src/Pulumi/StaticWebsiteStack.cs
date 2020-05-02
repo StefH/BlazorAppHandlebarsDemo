@@ -57,7 +57,6 @@ namespace Pulumi.Azure.StaticWebsite
                 StorageContainerName = "$web",
 
                 // Optional
-                Parallelism = 16,
                 AccessTier = BlobAccessTiers.Hot
             });
 
