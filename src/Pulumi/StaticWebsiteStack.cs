@@ -18,7 +18,7 @@ namespace Pulumi.Azure.StaticWebsite
                 // Create an Azure Resource Group
                 resourceGroup = new ResourceGroup("stef-rg-static-websites", new ResourceGroupArgs
                 {
-                    Location = "West Europe"
+                    Location = ResourceGroupLocations.WestEurope
                 });
             }
             else
