@@ -23,9 +23,14 @@ namespace Pulumi.Azure.Extensions.Storage
         public Input<int> Parallelism { get; set; }
 
         /// <summary>
-        /// An absolute path to a folder on the local file system.
+        /// An absolute path to a (zip) file or folder on the local file system.
         /// </summary>
         public string Source { get; set; }
+
+        /// <summary>
+        /// Indicate that a zip file should be extracted. Defaults to `false`.
+        /// </summary>
+        public bool UnzipCompressedFile { get; set; } = false;
 
         /// <summary>
         /// Specifies the storage account in which to create the storage container.
@@ -75,8 +80,41 @@ namespace Pulumi.Azure.Extensions.Storage
                 throw new ArgumentNullException(nameof(args.Source));
             }
 
-            var result = GetAllFiles(args.Source);
-            var validFiles = result.Files.Where(f => f.fileInfo.Length > 0); // https://github.com/pulumi/pulumi-azure/issues/544
+            ProcessFiles(args.Source, args);
+        }
+
+        private void ProcessFiles(string source, BlobCollectionArgs args)
+        {
+            var fi = new FileInfo(source);
+            bool sourceIsFile = fi.Exists;
+            bool sourceIsZipFile = sourceIsFile && ZipFileUtilities.IsZipFile(source);
+
+            using var tempStorage = new TempFolder(source, sourceIsZipFile);
+
+            IEnumerable<(FileInfo fileInfo, string blobName)> files;
+
+            if (sourceIsFile)
+            {
+                if (args.UnzipCompressedFile && sourceIsZipFile)
+                {
+                    ZipFile.ExtractToDirectory(source, tempStorage.Path);
+                    files = GetAllFilesFromFolder(tempStorage.Path);
+                }
+                else
+                {
+                    files = new List<(FileInfo fileInfo, string blobName)> { (fi, fi.Name) };
+                }
+            }
+            else if (Directory.Exists(tempStorage.Path))
+            {
+                files = GetAllFilesFromFolder(tempStorage.Path);
+            }
+            else
+            {
+                throw new NotSupportedException($"The source provided '{source}' must be an existing (zip) file or folder.");
+            }
+
+            var validFiles = files.Where(f => f.fileInfo.Length > 0); // https://github.com/pulumi/pulumi-azure/issues/544
             foreach (var (fileInfo, blobName) in validFiles)
             {
                 var blobArgs = new BlobArgs
@@ -85,20 +123,11 @@ namespace Pulumi.Azure.Extensions.Storage
                     ContentType = MimeTypeMap.GetMimeType(fileInfo.Extension),
                     Name = blobName,
                     Parallelism = args.Parallelism,
-                   // Source = (AssetArchive) (result.IsSingleZip ? new FileArchive(fileInfo.FullName) : new FileAsset(fileInfo.FullName)),
+                    Source = new FileAsset(fileInfo.FullName),
                     StorageAccountName = args.StorageAccountName,
                     StorageContainerName = args.StorageContainerName,
                     Type = args.Type
                 };
-
-                if (result.IsSingleZip)
-                {
-                    blobArgs.Source = new FileArchive(fileInfo.FullName);
-                }
-                else
-                {
-                    blobArgs.Source = new FileAsset(fileInfo.FullName);
-                }
 
                 var blobOptions = new CustomResourceOptions
                 {
@@ -109,48 +138,16 @@ namespace Pulumi.Azure.Extensions.Storage
             }
         }
 
-        private static GetFilesResult GetAllFiles(string source)
+        private static IEnumerable<(FileInfo fileInfo, string blobName)> GetAllFilesFromFolder(string source)
         {
-            var fileInfo = new FileInfo(source);
-            if (fileInfo.Exists)
-            {
-                //if (string.Equals(fileInfo.Extension, ".zip", StringComparison.OrdinalIgnoreCase))
-                //{
-                //    using var tempStorage = new TempStorage();
-                //    ZipFile.ExtractToDirectory(source, tempStorage.Path);
-                //    return GetAllFiles(tempStorage.Path);
-                //}
+            int sourceFolderLength = source.Length + 1;
 
-                return new GetFilesResult
-                {
-                    Files = new [] { (fileInfo, fileInfo.Name) },
-                    IsSingleZip = string.Equals(fileInfo.Extension, ".zip", StringComparison.OrdinalIgnoreCase)
-                };
-            }
-
-            if (Directory.Exists(source))
-            {
-                int sourceFolderLength = source.Length + 1;
-
-                return new GetFilesResult
-                {
-                    Files = Directory.EnumerateFiles(source, SearchPattern, SearchOption.AllDirectories)
-                        .Select(path =>
-                        (
-                            new FileInfo(path),
-                            path.Remove(0, sourceFolderLength).Replace(Path.PathSeparator, '/') // Make the blobName Azure Storage compatible
-                        ))
-                };
-            }
-
-            throw new NotSupportedException("The source provided must be an existing file or folder.");
-        }
-
-        private class GetFilesResult
-        {
-            public IEnumerable<(FileInfo fileInfo, string blobName)>? Files { get; set; }
-
-            public bool IsSingleZip { get; set; }
+            return Directory.EnumerateFiles(source, SearchPattern, SearchOption.AllDirectories)
+                .Select(path =>
+                (
+                    new FileInfo(path),
+                    path.Remove(0, sourceFolderLength).Replace(Path.PathSeparator, '/') // Make the blobName Azure Storage compatible
+                ));
         }
     }
 }
