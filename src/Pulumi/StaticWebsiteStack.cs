@@ -43,7 +43,7 @@ namespace Pulumi.Azure.StaticWebsite
             });
 
             // Upload the files from local to azure storage account
-            string wwwFolder = Path.Combine("docs-temp", "wwwroot.zip");
+            string wwwFolder = Path.Combine("docs-temp", "wwwroot");
             string currentDirectory = Directory.GetCurrentDirectory();
             var rootDirectory = Directory.GetParent(Directory.GetParent(currentDirectory).FullName);
             string sourceFolder = Path.Combine(rootDirectory.FullName, wwwFolder);
