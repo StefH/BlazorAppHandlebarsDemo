@@ -51,7 +51,6 @@ namespace Pulumi.Azure.StaticWebsite
             var blobCollectionArgs = new BlobCollectionArgs
             {
                 // Required
-                AutomaticallyExtractSource = true,
                 Source = sourceFolder,
                 Type = BlobTypes.Block,
                 StorageAccountName = storageAccount.Name,
