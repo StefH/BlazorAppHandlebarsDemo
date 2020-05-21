@@ -38,7 +38,7 @@ namespace Pulumi.Azure.StaticWebsite
                 StaticWebsite = new AccountStaticWebsiteArgs
                 {
                     IndexDocument = "index.html",
-                    //Error404Document = "404.html" // https://github.com/pulumi/pulumi-azure/issues/512
+                    Error404Document = "404.html" // Solved: https://github.com/pulumi/pulumi-azure/issues/512
                 }
             });
 
