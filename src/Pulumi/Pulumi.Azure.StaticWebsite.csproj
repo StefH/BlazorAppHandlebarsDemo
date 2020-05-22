@@ -7,19 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="AzureFunctionStack.cs" />
-    <Compile Remove="BlobCollection.cs" />
-    <Compile Remove="MimeTypeMap.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Pulumi.Azure" Version="3.5.1" />
     <PackageReference Include="Pulumi.Azure.Constants" Version="0.0.4" />
-    <PackageReference Include="Pulumi.Azure.Extensions" Version="0.2.0" />
+    <PackageReference Include="Pulumi.Azure.Extensions" Version="0.3.0" />
   </ItemGroup>
-
-  <!--<ItemGroup>
-    <ProjectReference Include="..\Pulumi.Azure.Extensions\Pulumi.Azure.Extensions.csproj" />
-  </ItemGroup>-->
 
 </Project>
